@@ -1,6 +1,6 @@
 .PHONY: test
 
-CFLAGS=-I ../src -Wall -g #-DSENTINEL
+CFLAGS=-I ../src -Wall -g -DSENTINEL -DUNIT_MAIN 
 
 test: test-rbtree
 	./test-rbtree

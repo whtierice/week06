@@ -26,6 +26,9 @@ node_t *rbtree_find(const rbtree *, const key_t);
 node_t *rbtree_min(const rbtree *);
 node_t *rbtree_max(const rbtree *);
 int rbtree_erase(rbtree *, node_t *);
+void inorder_print(rbtree *t, node_t *u);
+int validate_rbtree_rec(rbtree *t, node_t *u);
+void validate_rbtree(rbtree *t);
 
 int rbtree_to_array(const rbtree *, key_t *, const size_t);
 

@@ -1,15 +1,18 @@
 #include <assert.h>
-#include <rbtree.h>
+#include "../src/rbtree.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+
 
 // new_rbtree should return rbtree struct with null root node
 void test_init(void)
 {
   rbtree *t = new_rbtree();
   assert(t != NULL);
-#ifdef SENTINEL
+  // 전처리지시문, 센티넬이 정의되어있는지 확인하는 문구, 컴파일 과정에서 확인,
+#ifdef SENTINEL 
   assert(t->nil != NULL);
   assert(t->root == t->nil);
 #else
@@ -52,13 +55,12 @@ void test_find_single(const key_t key, const key_t wrong_key)
 
   q = rbtree_find(t, wrong_key);
   assert(q == NULL);
-
   delete_rbtree(t);
 }
 
 // erase should delete root node
 void test_erase_root(const key_t key)
-{
+{ 
   rbtree *t = new_rbtree();
   node_t *p = rbtree_insert(t, key);
   assert(p != NULL);
@@ -350,19 +352,28 @@ void test_to_array_suite()
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n)
 {
   for (int i = 0; i < n; i++)
-  {
+  { 
     node_t *p = rbtree_insert(t, arr[i]);
+    
     assert(p != NULL);
+    
   }
 
   for (int i = 0; i < n; i++)
   {
+  
     node_t *p = rbtree_find(t, arr[i]);
-    // printf("arr[%d] = %d\n", i, arr[i]);
+ 
+    
     assert(p != NULL);
+    
     assert(p->key == arr[i]);
     rbtree_erase(t, p);
+
   }
+
+  
+
 
   for (int i = 0; i < n; i++)
   {
@@ -390,9 +401,7 @@ void test_find_erase_fixed()
   const size_t n = sizeof(arr) / sizeof(arr[0]);
   rbtree *t = new_rbtree();
   assert(t != NULL);
-
   test_find_erase(t, arr, n);
-
   delete_rbtree(t);
 }
 
@@ -412,6 +421,7 @@ void test_find_erase_rand(const size_t n, const unsigned int seed)
   delete_rbtree(t);
 }
 
+#ifdef UNIT_MAIN
 int main(void)
 {
   test_init();
@@ -427,3 +437,6 @@ int main(void)
   test_find_erase_rand(10000, 17);
   printf("Passed all tests!\n");
 }
+#endif
+
+
